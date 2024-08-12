@@ -95,9 +95,9 @@ const Post = ({data}) => {
         <div>
           {data?.media.mediaType=='image'?
            <img src={data?.media?.url} className='h-[300px] w-full object-cover'/>
-          : <video controls className='w-full h-[300px] object-contain rounded cursor-pointer'>
+          :data?.media.mediaType=='video'? <video controls className='w-full h-[300px] object-contain rounded cursor-pointer'>
           <source src={data?.media?.url} type="video/mp4" />
-        </video>
+        </video>:""
           }
         </div>
       </section>
