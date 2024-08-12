@@ -20,6 +20,8 @@ const Profile = () => {
   const [showFollowing, setshowFollowing] = useState(false);
   const [inputval, setinputval] = useState("");
   console.log('profileuser:',profileuser)
+  axios.defaults.withCredentials=true
+
 
   const { id } = useParams();
   

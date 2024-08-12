@@ -13,6 +13,7 @@ const User = ({user,findprofileuser,id}) => {
     const {userdata} =
     useContext(MainContext);
     console.log(alredayFollowing,'user : ',user);
+    axios.defaults.withCredentials=true
     
    
     const finduser=()=>{

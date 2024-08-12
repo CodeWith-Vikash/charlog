@@ -17,6 +17,7 @@ const Post = ({data}) => {
   const [commenting, setcommenting] = useState(false)
   const {getPost,userdata,calculateTimeGap,commentTimeGap} = useContext(MainContext)
   const [isliked, setisliked] = useState(false)
+  axios.defaults.withCredentials=true
 
   // check if post is liked by the user
   const checkLike = () => {

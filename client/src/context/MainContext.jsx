@@ -8,6 +8,7 @@ export const ContextProvider=({children})=>{
     const [userdata, setuserdata] = useState(null)
     const [allusers, setallusers] = useState([])
     const [profileuser, setprofileuser] = useState(null);
+    axios.defaults.withCredentials=true
    //  function to get allposts
     const getPost=()=>{
        axios.get('https://charlog-server.vercel.app/posts').then((result)=>{

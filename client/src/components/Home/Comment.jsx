@@ -19,6 +19,8 @@ const Comment = ({comment,postId}) => {
     const [editing, setediting] = useState(false)
     const [saving, setsaving] = useState(false)
     const [editval, seteditval] = useState('')
+    axios.defaults.withCredentials=true
+
 
     const toggleReplyBox=()=>{
       setshowinputbox(!showinputbox)

@@ -14,6 +14,7 @@ const Signup = () => {
   const passref=useRef()
   const userref=useRef()
   const emailref=useRef()
+  axios.defaults.withCredentials=true
    // Function to toggle password visibility
   const togglePass = () => {
     passref.current.type = showpass ? 'password' : 'text';

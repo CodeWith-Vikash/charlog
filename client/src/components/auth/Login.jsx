@@ -15,6 +15,7 @@ const Login = () => {
   const passref=useRef()
   const mailref=useRef()
   const {getlocalstorage} = useContext(MainContext)
+  axios.defaults.withCredentials=true
  // Function to toggle password visibility
  const togglePass = () => {
   passref.current.type = showpass ? 'password' : 'text';

@@ -14,6 +14,7 @@ const AddPost = () => {
   const [mediaType,setMediaType] = useState('')
   const {handleFileChange,getPost,userdata}=useContext(MainContext)
   const navigate=useNavigate()
+  axios.defaults.withCredentials=true
   
   // function to add post
   const handleSubmit=(e)=>{

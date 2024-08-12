@@ -18,6 +18,7 @@ const Reply = ({ reply, postId, commentId, username }) => {
   const [editing, setediting] = useState(false);
   const [saving, setsaving] = useState(false);
   const [editval, seteditval] = useState("");
+  axios.defaults.withCredentials=true
   // toggle reply box
   const toggleReplyBox = () => {
     setshowreplybox(!showreplybox);

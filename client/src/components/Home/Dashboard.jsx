@@ -35,6 +35,8 @@ const Dashboard = () => {
   const [inputval, setinputval] = useState("");
   const [unfollowid, setunfollowid] = useState(false)
   const [removingid, setremovingid] = useState(null)
+  axios.defaults.withCredentials=true
+
 
   // Function to get user posts
   const findUserPosts = () => {
