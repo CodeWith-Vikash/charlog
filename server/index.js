@@ -12,9 +12,9 @@ app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: ["https://charlog.vercel.app"],
-    methods: ["POST", "GET"],
-    credentials: true
+    origin: 'https://charlog.vercel.app', // Allow your specific frontend origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
+    credentials: true // Allow cookies to be sent with the requests
 }));
 
 mongoose.connect(`mongodb+srv://${process.env.USERNAME}:${process.env.DB_PASSWORD}@cluster0.w7gbj.mongodb.net/`).then(()=>{
