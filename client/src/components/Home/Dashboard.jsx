@@ -75,7 +75,7 @@ const Dashboard = () => {
       const newProfilePic = reader.result;
       setprofilepic(newProfilePic);
       axios
-        .patch(`/profile/${userdata._id}`, {
+        .patch(`https://charlog-server.vercel.app/profile/${userdata._id}`, {
           avatar: newProfilePic,
         })
         .then((result) => {
@@ -108,7 +108,7 @@ const Dashboard = () => {
     e.preventDefault();
     setsaving(true);
     axios
-      .patch(`/post/edit/${editingid}`, {
+      .patch(`https://charlog-server.vercel.app/post/edit/${editingid}`, {
         title: edittext,
         image: editimg,
       })
@@ -141,7 +141,7 @@ const Dashboard = () => {
     e.preventDefault();
     setdeleting(true)
     axios
-      .delete(`/post/delete/${deletingid}`)
+      .delete(`https://charlog-server.vercel.app/post/delete/${deletingid}`)
       .then((data) => {
         console.log(data);
         toast.info('post deleted')
@@ -170,7 +170,7 @@ const Dashboard = () => {
     // function to unfollow user
     const unfollow=(id)=>{
       setunfollowid(id)
-      axios.patch(`/unfollow/${userdata._id}`,{
+      axios.patch(`https://charlog-server.vercel.app/unfollow/${userdata._id}`,{
         userId : id
       }).then((result)=>{
          console.log(result);
@@ -188,7 +188,7 @@ const Dashboard = () => {
 const removeFollower = (id) => {
   setremovingid(id);
   axios
-    .patch(`/follower/remove/${id}`, {
+    .patch(`https://charlog-server.vercel.app/follower/remove/${id}`, {
       userId: userdata._id
     })
     .then((result) => {
