@@ -30,7 +30,7 @@ const Comment = ({comment,postId}) => {
     const replyComment=(e)=>{
        e.preventDefault()
        setreplying(true)
-       axios.patch(`https://charlog-server.vercel.app/post/${postId}/comment/${comment._id}/reply`,{
+       axios.patch(`/post/${postId}/comment/${comment._id}/reply`,{
            username:userdata.username,
            avatar: userdata.avatar,
            reply: replyval,
@@ -51,7 +51,7 @@ const Comment = ({comment,postId}) => {
     // function to delete a comment
     const deleteComment=()=>{
       setdeleting(true)
-      axios.patch(`https://charlog-server.vercel.app/post/${postId}/comment/${comment._id}/delete`).then((result)=>{
+      axios.patch(`/post/${postId}/comment/${comment._id}/delete`).then((result)=>{
         console.log(result);
         toast.info('comment deleted')
         setdeleting(false)
@@ -72,7 +72,7 @@ const Comment = ({comment,postId}) => {
     const saveComment=(e)=>{
       e.preventDefault()
       setsaving(true)
-      axios.patch(`https://charlog-server.vercel.app/post/${postId}/comment/${comment._id}/edit`,{
+      axios.patch(`/post/${postId}/comment/${comment._id}/edit`,{
         comment:editval
       }).then((result)=>{
         console.log(result);
