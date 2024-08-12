@@ -16,7 +16,7 @@ const User = ({user,findprofileuser,id}) => {
     
    
     const finduser=()=>{
-      axios.get(`http://localhost:3000/user/${user.userId}`).then((result)=>{
+      axios.get(`https://charlog-server.vercel.app/user/${user.userId}`).then((result)=>{
         setuserdetails(result.data)
         console.log(result);
       }).catch((err)=>{
@@ -27,7 +27,7 @@ const User = ({user,findprofileuser,id}) => {
   const followConnection = () => {
     setfollowing(true);
     axios
-      .patch(`http://localhost:3000/follow/${userdata._id}`, {
+      .patch(`https://charlog-server.vercel.app/follow/${userdata._id}`, {
         username: user.username,
         userId: user.userId,
         avatar: user.avatar,
@@ -50,7 +50,7 @@ const User = ({user,findprofileuser,id}) => {
   const unfollowConnection = () => {
     setunfollowing(true);
     axios
-      .patch(`http://localhost:3000/unfollow/${userdata._id}`, {
+      .patch(`https://charlog-server.vercel.app/unfollow/${userdata._id}`, {
         userId:user.userId,
       })
       .then((result) => {

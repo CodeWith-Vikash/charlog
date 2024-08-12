@@ -23,7 +23,7 @@ const Signup = () => {
   const handleSubmit=(e)=>{
     e.preventDefault()
     setisloading(true)
-    axios.post('http://localhost:3000/signup',{
+    axios.post('https://charlog-server.vercel.app/signup',{
       username:userref.current.value,
       email: emailref.current.value,
       password: passref.current.value

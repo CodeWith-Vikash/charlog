@@ -10,7 +10,7 @@ export const ContextProvider=({children})=>{
     const [profileuser, setprofileuser] = useState(null);
    //  function to get allposts
     const getPost=()=>{
-       axios.get('http://localhost:3000/posts').then((result)=>{
+       axios.get('https://charlog-server.vercel.app/posts').then((result)=>{
           setallposts(result.data)
        }).catch((err)=>{
           console.log(err);
@@ -124,7 +124,7 @@ export const ContextProvider=({children})=>{
   
 
     const finduser=(id)=>{
-      axios.get(`http://localhost:3000/user/${id}`).then((result)=>{
+      axios.get(`https://charlog-server.vercel.app/user/${id}`).then((result)=>{
         setuserdata(result.data)
         console.log(result);
       }).catch((err)=>{
@@ -134,7 +134,7 @@ export const ContextProvider=({children})=>{
    // function to find profile user
   const findprofileuser = (id) => {
     axios
-      .get(`http://localhost:3000/user/${id}`)
+      .get(`https://charlog-server.vercel.app/user/${id}`)
       .then((result) => {
         setprofileuser(result.data);
       })
@@ -155,7 +155,7 @@ export const ContextProvider=({children})=>{
     }
     //function to getallusers
     const getUsers=()=>{
-       axios.get('http://localhost:3000/users').then((result)=>{
+       axios.get('https://charlog-server.vercel.app/users').then((result)=>{
         console.log(result);
         setallusers(result.data)
        }).catch((err)=>{
