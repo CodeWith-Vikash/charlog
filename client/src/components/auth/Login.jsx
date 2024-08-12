@@ -25,7 +25,7 @@ const Login = () => {
   const handleSubmit=(e)=>{
     e.preventDefault()
     setisloading(true)
-    axios.post('/login',{
+    axios.post('https://charlog-server.vercel.app/login',{
       email:mailref.current.value,
       password:passref.current.value
     },{ withCredentials: true }).then((result)=>{
