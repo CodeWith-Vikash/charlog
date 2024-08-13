@@ -7,13 +7,12 @@ const bodyParser=require('body-parser')
 const cookieParser=require('cookie-parser')
 
 const app=express()
+
 app.use(cors({
-    origin: "https://charlog.vercel.app", // Allow requests from your frontend domain
-    credentials: true, // Allow cookies to be sent
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed methods
-    allowedHeaders: "Content-Type,Authorization", // Allowed headers
-    optionsSuccessStatus: 200 // For legacy browser support
+    origin: "https://charlog.vercel.app",
+    credentials: true, // Allow cookies and credentials to be sent
 }));
+
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 app.use(express.json())
