@@ -8,13 +8,17 @@ export const ContextProvider=({children})=>{
     const [userdata, setuserdata] = useState(null)
     const [allusers, setallusers] = useState([])
     const [profileuser, setprofileuser] = useState(null);
+    const [postloading, setpostloading] = useState(false)
     axios.defaults.withCredentials=true
    //  function to get allposts
     const getPost=()=>{
+      setpostloading(true)
        axios.get('https://charlog-server.vercel.app/posts').then((result)=>{
           setallposts(result.data)
+          setpostloading(false)
        }).catch((err)=>{
           console.log(err);
+          setpostloading(false)
        })
     }
 
@@ -168,7 +172,7 @@ export const ContextProvider=({children})=>{
       getlocalstorage()
       getUsers()
     },[])
-    return <MainContext.Provider value={{getPost,allposts,handleFileChange,userdata,getlocalstorage,calculateTimeGap,commentTimeGap,allusers,findprofileuser,profileuser}}>
+    return <MainContext.Provider value={{getPost,allposts,handleFileChange,userdata,getlocalstorage,calculateTimeGap,commentTimeGap,allusers,findprofileuser,profileuser,postloading}}>
         {children}
     </MainContext.Provider>
 }
