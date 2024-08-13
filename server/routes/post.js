@@ -110,9 +110,9 @@ router.patch('/post/:id/like', async (req, res) => {
 // route to update post
 router.patch('/post/edit/:id',async(req,res)=>{
     const id=req.params.id
-    const {title,image}=req.body
+    const {title,media}=req.body
     try {
-        const updatedpost = await postModel.findByIdAndUpdate(id,{title,image},{new:true});
+        const updatedpost = await postModel.findByIdAndUpdate(id,{title,media},{new:true});
         if (!updatedpost) {
             return res.status(404).json('Post not found');
         }
