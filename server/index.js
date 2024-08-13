@@ -11,12 +11,11 @@ app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 app.use(express.json())
 app.use(cookieParser())
-const corsOptions = {
-    origin: '*', // Replace with your frontend URL
-    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-};
 
-app.use(cors(corsOptions));
+app.use(cors({
+    origin:"https://charlog.vercel.app",
+    credentials:true
+}));
 
 
 mongoose.connect(`mongodb+srv://${process.env.USERNAME}:${process.env.DB_PASSWORD}@cluster0.w7gbj.mongodb.net/`).then(()=>{
