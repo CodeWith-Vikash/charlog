@@ -19,6 +19,7 @@ const Dashboard = () => {
   const [edittext, setedittext] = useState("");
   const [saving, setsaving] = useState(false);
   const [saveerror, setsaveerror] = useState(false);
+  const [mediatype, setmediatype] = useState('')
   // states to delete post
   const [deleting, setdeleting] = useState(false);
   const [deleteimg, setdeleteimg] = useState(null);
@@ -75,7 +76,7 @@ const Dashboard = () => {
       const newProfilePic = reader.result;
       setprofilepic(newProfilePic);
       axios
-        .patch(`https://charlog-server.vercel.app/profile/${userdata._id}`, {
+        .patch(`http://localhost:3000/profile/${userdata._id}`, {
           avatar: newProfilePic,
         })
         .then((result) => {
@@ -99,7 +100,8 @@ const Dashboard = () => {
   const editPost = (post) => {
     window.scrollTo(0, 0);
     seteditingid(post._id);
-    seteditimg(post.image);
+    seteditimg(post.media.url);
+    setmediatype(post.media.mediaType)
     setedittext(post.title);
   };
 
@@ -108,9 +110,12 @@ const Dashboard = () => {
     e.preventDefault();
     setsaving(true);
     axios
-      .patch(`https://charlog-server.vercel.app/post/edit/${editingid}`, {
+      .patch(`http://localhost:3000/post/edit/${editingid}`, {
         title: edittext,
-        image: editimg,
+        media:{
+          url:editimg,
+          mediaType:mediatype
+        }
       })
       .then((data) => {
         console.log(data);
@@ -141,7 +146,7 @@ const Dashboard = () => {
     e.preventDefault();
     setdeleting(true)
     axios
-      .delete(`https://charlog-server.vercel.app/post/delete/${deletingid}`)
+      .delete(`http://localhost:3000/post/delete/${deletingid}`)
       .then((data) => {
         console.log(data);
         toast.info('post deleted')
@@ -170,7 +175,7 @@ const Dashboard = () => {
     // function to unfollow user
     const unfollow=(id)=>{
       setunfollowid(id)
-      axios.patch(`https://charlog-server.vercel.app/unfollow/${userdata._id}`,{
+      axios.patch(`http://localhost:3000/unfollow/${userdata._id}`,{
         userId : id
       }).then((result)=>{
          console.log(result);
@@ -188,7 +193,7 @@ const Dashboard = () => {
 const removeFollower = (id) => {
   setremovingid(id);
   axios
-    .patch(`https://charlog-server.vercel.app/follower/remove/${id}`, {
+    .patch(`http://localhost:3000/follower/remove/${id}`, {
       userId: userdata._id
     })
     .then((result) => {
@@ -296,14 +301,20 @@ const removeFollower = (id) => {
               value={edittext}
               onChange={(e) => setedittext(e.target.value)}
             ></textarea>
-            <img src={editimg} className="w-full h-[140px] object-cover" />
+            <div>
+        {mediatype=='video'?
+         <video controls className='w-full h-[140px] object-cover rounded cursor-pointer'>
+         <source src={editimg} type="video/mp4" />
+       </video>
+        : <img src={editimg} className='w-full h-[150px] object-cover rounded cursor-pointer'/>}
+        </div>
             <div className="flex items-center justify-between">
               <label
                 htmlFor="editimg"
                 className="flex items-center gap-2 cursor-pointer"
               >
                 <FaFileImage size="1.5rem" color="violet" />
-                <b>Edit image</b>
+                <b>Edit media</b>
               </label>
               <button
                 type="submit"
@@ -316,7 +327,7 @@ const removeFollower = (id) => {
               type="file"
               className="hidden"
               id="editimg"
-              onChange={(e) => handleFileChange(e, seteditimg)}
+              onChange={(e) => handleFileChange(e, seteditimg,setmediatype)}
             />
           </form>
         </section>
