@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 app.use(express.json())
 app.use(cookieParser())
 const corsOptions = {
-    origin: '*', // Replace with your frontend URL
+    origin: 'http://localhost:5173', // Replace with your frontend URL
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
