@@ -37,11 +37,11 @@ const AddPost = () => {
     }).then((data)=>{
       console.log(data);
       toast.info('Post added successfully')
+      getPost()
       setposterror(false)
       settextval('')
       setimagesrc(null)
       setsaving(false)
-      getPost()
     }).catch((err)=>{
       console.log((err));
       toast.error('internal server error while adding the post')
