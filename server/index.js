@@ -18,8 +18,7 @@ app.use(compression({
     level:6,
     threshold:10*1000
 }))
-app.use(bodyParser.json({ limit: '100mb' }));
-app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
+app.use(bodyParser.json());
 app.use(express.json())
 app.use(cookieParser())
 
