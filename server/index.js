@@ -5,6 +5,7 @@ const postroute= require('./routes/post')
 const userroute= require('./routes/user')
 const bodyParser=require('body-parser')
 const cookieParser=require('cookie-parser')
+const compression = require('compression')
 
 const app=express()
 
@@ -13,6 +14,10 @@ app.use(cors({
     credentials: true, // Allow cookies and credentials to be sent
 }));
 
+app.use(compression({
+    level:6,
+    threshold:10*1000
+}))
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 app.use(express.json())
