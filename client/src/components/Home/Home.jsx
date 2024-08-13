@@ -13,7 +13,7 @@ const Home = () => {
     <div className='min-h-screen bg-gray-300 flex flex-col items-center py-8 gap-6'>
       <AddPost/>
       {postloading?
-        <img src="/Fading wheel.gif" className='h-20 w-20 pt-5'/>
+        <img src="/Fading wheel.gif" className='h-20 w-20 pt-10 object cover rounded-full'/>
       :<main className='flex flex-col gap-6'>
         {allposts.map((item,i)=>{
           return <Post data={item} key={i}/>
