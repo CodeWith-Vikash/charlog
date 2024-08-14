@@ -5,7 +5,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://charlog-server.vercel.app',
+        target: 'https://charlog-server.vercel.app/',
         changeOrigin: true,
         secure: false,
       }
