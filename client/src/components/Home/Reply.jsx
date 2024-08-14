@@ -30,7 +30,7 @@ const Reply = ({ reply, postId, commentId, username }) => {
     setreplying(true);
     axios
       .patch(
-        `https://charlog-server.vercel.app/post/${postId}/comment/${commentId}/reply`,
+        `/api/post/${postId}/comment/${commentId}/reply`,
         {
           username: userdata.username,
           avatar: userdata.avatar,
@@ -58,7 +58,7 @@ const Reply = ({ reply, postId, commentId, username }) => {
     setdeleting(true);
     axios
       .patch(
-        `https://charlog-server.vercel.app/post/${postId}/comment/${commentId}/reply/${reply._id}/delete`
+        `/api/post/${postId}/comment/${commentId}/reply/${reply._id}/delete`
       )
       .then((result) => {
         console.log(result);
@@ -84,7 +84,7 @@ const Reply = ({ reply, postId, commentId, username }) => {
     setsaving(true);
     axios
       .patch(
-        `https://charlog-server.vercel.app/post/${postId}/comment/${commentId}/reply/${reply._id}/edit`,
+        `/api/post/${postId}/comment/${commentId}/reply/${reply._id}/edit`,
         {
           reply: editval,
         }

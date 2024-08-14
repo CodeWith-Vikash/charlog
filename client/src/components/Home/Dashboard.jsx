@@ -76,7 +76,7 @@ const Dashboard = () => {
       const newProfilePic = reader.result;
       setprofilepic(newProfilePic);
       axios
-        .patch(`http://localhost:3000/profile/${userdata._id}`, {
+        .patch(`/api/profile/${userdata._id}`, {
           avatar: newProfilePic,
         })
         .then((result) => {
@@ -110,7 +110,7 @@ const Dashboard = () => {
     e.preventDefault();
     setsaving(true);
     axios
-      .patch(`http://localhost:3000/post/edit/${editingid}`, {
+      .patch(`/api/post/edit/${editingid}`, {
         title: edittext,
         media:{
           url:editimg,
@@ -146,7 +146,7 @@ const Dashboard = () => {
     e.preventDefault();
     setdeleting(true)
     axios
-      .delete(`http://localhost:3000/post/delete/${deletingid}`)
+      .delete(`/api/post/delete/${deletingid}`)
       .then((data) => {
         console.log(data);
         toast.info('post deleted')
@@ -175,7 +175,7 @@ const Dashboard = () => {
     // function to unfollow user
     const unfollow=(id)=>{
       setunfollowid(id)
-      axios.patch(`http://localhost:3000/unfollow/${userdata._id}`,{
+      axios.patch(`/api/unfollow/${userdata._id}`,{
         userId : id
       }).then((result)=>{
          console.log(result);
@@ -193,7 +193,7 @@ const Dashboard = () => {
 const removeFollower = (id) => {
   setremovingid(id);
   axios
-    .patch(`http://localhost:3000/follower/remove/${id}`, {
+    .patch(`/api/follower/remove/${id}`, {
       userId: userdata._id
     })
     .then((result) => {

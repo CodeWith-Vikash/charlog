@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 
 // route to get all users
-router.get('/users',async(req,res)=>{
+router.get('/api/users',async(req,res)=>{
     try {
         const users = await userModel.find()
         res.status(200).json(users)
@@ -16,7 +16,7 @@ router.get('/users',async(req,res)=>{
 })
 
 // Signup route
-router.post('/signup', async (req, res) => {
+router.post('/api/signup', async (req, res) => {
     const { username, email, password } = req.body;
     try {
         const hashPassword = await bcrypt.hash(password, 10);
@@ -33,7 +33,7 @@ router.post('/signup', async (req, res) => {
 });
 
 // Login route
-router.post('/login', async (req, res) => {
+router.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await userModel.findOne({ email });
@@ -53,7 +53,7 @@ router.post('/login', async (req, res) => {
 });
 
 // Update profile route
-router.patch('/profile/:id', async (req, res) => {
+router.patch('/api/profile/:id', async (req, res) => {
     const { id } = req.params;
     const { avatar } = req.body;
     try {
@@ -68,7 +68,7 @@ router.patch('/profile/:id', async (req, res) => {
 });
 
 // Get user profile route
-router.get('/user/:id', async (req, res) => {
+router.get('/api/user/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const user = await userModel.findById(id);
@@ -82,7 +82,7 @@ router.get('/user/:id', async (req, res) => {
 });
 
 // Route to unfollow user
-router.patch('/unfollow/:id', async (req, res) => {
+router.patch('/api/unfollow/:id', async (req, res) => {
     const { userId } = req.body;
     const { id } = req.params;
     try {
@@ -104,7 +104,7 @@ router.patch('/unfollow/:id', async (req, res) => {
 });
 
 // Route to follow user
-router.patch('/follow/:id', async (req, res) => {
+router.patch('/api/follow/:id', async (req, res) => {
     const { username, userId, avatar,followers,following } = req.body;
     const { id } = req.params;
     try {
@@ -132,7 +132,7 @@ router.patch('/follow/:id', async (req, res) => {
 });
 
 // Route to remove follower
-router.patch('/follower/remove/:id', async (req, res) => {
+router.patch('/api/follower/remove/:id', async (req, res) => {
     const { userId } = req.body;  // This is the user who wants to remove a follower
     const { id } = req.params;    // This is the follower being removed
     try {

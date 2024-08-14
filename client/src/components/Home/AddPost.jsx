@@ -21,7 +21,7 @@ const AddPost = () => {
     e.preventDefault()
     if(userdata){
       setsaving(true)
-    axios.post('https://charlog-server.vercel.app/posts',{
+    axios.post('/api/posts',{
        userInfo:{
          avatar:userdata.avatar,
          username:userdata.username,

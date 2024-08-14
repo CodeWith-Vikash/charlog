@@ -3,7 +3,7 @@ const router = express.Router();
 const postModel = require('../models/PostModel');
 
 // route to get all posts
-router.get('/posts', async (req, res) => {
+router.get('/api/posts', async (req, res) => {
     try {
         const data = await postModel.find();
         res.json(data);
@@ -13,7 +13,7 @@ router.get('/posts', async (req, res) => {
 });
 
 // route to add a post
-router.post('/posts', async (req, res) => {
+router.post('/api/posts', async (req, res) => {
     const { userInfo, title, media, likes, comments } = req.body;
     try {
         const postedData = new postModel({
@@ -31,7 +31,7 @@ router.post('/posts', async (req, res) => {
 });
 
 // route to comment on a post
-router.patch('/post/:id/comment', async (req, res) => {
+router.patch('/api/post/:id/comment', async (req, res) => {
     const { username, avatar, comment,userId } = req.body;
     const id = req.params.id;
     try {
@@ -48,7 +48,7 @@ router.patch('/post/:id/comment', async (req, res) => {
 });
 
 // route to delete a comment
-router.patch('/post/:id/comment/:commentId/delete',async(req,res)=>{
+router.patch('/api/post/:id/comment/:commentId/delete',async(req,res)=>{
     const {id,commentId}=req.params
     try {
         const post = await postModel.findById(id);
@@ -65,7 +65,7 @@ router.patch('/post/:id/comment/:commentId/delete',async(req,res)=>{
 })
 
 // route to edit a comment
-router.patch('/post/:id/comment/:commentId/edit',async(req,res)=>{
+router.patch('/api/post/:id/comment/:commentId/edit',async(req,res)=>{
     const {id,commentId}=req.params
     const {comment}=req.body
     try {
@@ -82,7 +82,7 @@ router.patch('/post/:id/comment/:commentId/edit',async(req,res)=>{
 })
 
 // route to like a post 
-router.patch('/post/:id/like', async (req, res) => {
+router.patch('/api/post/:id/like', async (req, res) => {
     const { username, userId } = req.body;
     const id = req.params.id;
     try {
@@ -108,7 +108,7 @@ router.patch('/post/:id/like', async (req, res) => {
 });
 
 // route to update post
-router.patch('/post/edit/:id',async(req,res)=>{
+router.patch('/api/post/edit/:id',async(req,res)=>{
     const id=req.params.id
     const {title,media}=req.body
     try {
@@ -124,7 +124,7 @@ router.patch('/post/edit/:id',async(req,res)=>{
 })
 
 // route to delete post
-router.delete('/post/delete/:id',async(req,res)=>{
+router.delete('/api/post/delete/:id',async(req,res)=>{
     const id=req.params.id
     try {
         const deletedpost = await postModel.findByIdAndDelete(id);
@@ -139,7 +139,7 @@ router.delete('/post/delete/:id',async(req,res)=>{
 })
 
 // route to reply a comment
-router.patch('/post/:id/comment/:commentId/reply', async(req,res)=>{
+router.patch('/api/post/:id/comment/:commentId/reply', async(req,res)=>{
     const { username, avatar, reply,userId,commentUser } = req.body;
     const {id,commentId} = req.params
     try {
@@ -162,7 +162,7 @@ router.patch('/post/:id/comment/:commentId/reply', async(req,res)=>{
 })
 
 // route to delete a reply
-router.patch('/post/:postId/comment/:commentId/reply/:replyId/delete', async(req,res)=>{
+router.patch('/api/post/:postId/comment/:commentId/reply/:replyId/delete', async(req,res)=>{
     const {postId,commentId,replyId} = req.params
     try {
         const post = await postModel.findById(postId);
@@ -179,7 +179,7 @@ router.patch('/post/:postId/comment/:commentId/reply/:replyId/delete', async(req
 })
 
 // route to edit a reply
-router.patch('/post/:postId/comment/:commentId/reply/:replyId/edit', async(req,res)=>{
+router.patch('/api/post/:postId/comment/:commentId/reply/:replyId/edit', async(req,res)=>{
     const {postId,commentId,replyId} = req.params
     const {reply}=req.body
     try {

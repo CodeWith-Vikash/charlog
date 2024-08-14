@@ -13,7 +13,7 @@ export const ContextProvider=({children})=>{
    //  function to get allposts
     const getPost=()=>{
       setpostloading(true)
-       axios.get('https://charlog-server.vercel.app/posts').then((result)=>{
+       axios.get('/api/posts').then((result)=>{
           setallposts(result.data)
           setpostloading(false)
        }).catch((err)=>{
@@ -129,7 +129,7 @@ export const ContextProvider=({children})=>{
   
 
     const finduser=(id)=>{
-      axios.get(`https://charlog-server.vercel.app/user/${id}`).then((result)=>{
+      axios.get(`/api/user/${id}`).then((result)=>{
         setuserdata(result.data)
         console.log(result);
       }).catch((err)=>{
@@ -139,7 +139,7 @@ export const ContextProvider=({children})=>{
    // function to find profile user
   const findprofileuser = (id) => {
     axios
-      .get(`https://charlog-server.vercel.app/user/${id}`)
+      .get(`/api/user/${id}`)
       .then((result) => {
         setprofileuser(result.data);
       })
@@ -160,7 +160,7 @@ export const ContextProvider=({children})=>{
     }
     //function to getallusers
     const getUsers=()=>{
-       axios.get('https://charlog-server.vercel.app/users').then((result)=>{
+       axios.get('/api/users').then((result)=>{
         console.log(result);
         setallusers(result.data)
        }).catch((err)=>{
