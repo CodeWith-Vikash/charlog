@@ -4,11 +4,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server: {
     proxy: {
-      '/api': {
-        target: 'https://charlog-server.vercel.app/',
-        changeOrigin: true,
-        secure: false,
-      }
+      '/api':'http://localhost:3000'
     }
   },
   plugins: [react()],

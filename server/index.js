@@ -9,10 +9,7 @@ const compression = require('compression')
 
 const app=express()
 
-app.use(cors({
-    origin: "https://charlog.vercel.app",
-    credentials: true, // Allow cookies and credentials to be sent
-}));
+app.use(express.static('dist'))
 
 app.use(compression({
     level:6,
@@ -24,7 +21,7 @@ app.use(cookieParser())
 
 
 
-mongoose.connect(`mongodb+srv://${process.env.USERNAME}:${process.env.DB_PASSWORD}@cluster0.w7gbj.mongodb.net/`).then(()=>{
+mongoose.connect(`mongodb+srv://vikashkumardev87:RSLx10Hi63x2zgBY@cluster0.w7gbj.mongodb.net/`).then(()=>{
     console.log('mongodb connected');
 })
 
