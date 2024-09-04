@@ -11,7 +11,7 @@ const dotenv= require('dotenv')
 const app=express()
 dotenv.config();
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173","https://charlog.vercel.app"],
     methods: ['GET','POST','PATCH','DELETE'],
     credentials: true
 }));
