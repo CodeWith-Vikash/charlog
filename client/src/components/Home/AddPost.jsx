@@ -12,10 +12,38 @@ const AddPost = () => {
   const [saving, setsaving] = useState(false)
   const [posterror, setposterror] = useState(false)
   const [mediaType,setMediaType] = useState('')
-  const {handleFileChange,getPost,userdata,baseurl}=useContext(MainContext)
+  const {uploadFile,imgloading,getPost,userdata,baseurl}=useContext(MainContext)
   const navigate=useNavigate()
   axios.defaults.withCredentials=true
   
+
+   // function to handle media input
+   async function handleFileInput(file) {
+    if (file) {
+      const fileType = file.type;
+
+      let type;
+      if (fileType.startsWith("image/")) {
+        type = "image";
+      } else if (fileType.startsWith("video/")) {
+        type = "video";
+      } else if (fileType.startsWith("application/")) {
+        type = "file";
+      } else {
+        type = "unknown";
+      }
+      if(type=='image' || type=='video'){
+        setMediaType(type);
+      await uploadFile(file, setimagesrc,setMediaType);
+      setfilename(file.name)
+      console.log(file.name);
+      }else{
+        toast.warning('please select image or video')
+      }
+      
+    }
+  }
+
   // function to add post
   const handleSubmit=(e)=>{
     e.preventDefault()
@@ -63,7 +91,7 @@ const AddPost = () => {
        required
       ></textarea>
       <input type="file" id='img' className='hidden' 
-        onChange={(e)=> handleFileChange(e,setimagesrc,setMediaType)}
+        onChange={(e)=> handleFileInput(e.target.files[0])}
       />
       <label htmlFor="img"  className='flex flex-col gap-2'>
         {imagesrc && <div>
@@ -74,10 +102,12 @@ const AddPost = () => {
         : <img src={imagesrc} className='w-full h-[150px] object-cover rounded cursor-pointer'/>}
         </div>}
         <div className='flex justify-between'>
-        <div className='flex items-center cursor-pointer gap-2'>
+        {imgloading?
+         <img src="/Fading wheel.gif" className='rounded-full h-10'/>
+        :<div className='flex items-center cursor-pointer gap-2'>
         <FaFileImage size='1.5rem' color='violet'/>
         <b>Add media</b>
-        </div>
+        </div>}
         <button type='submit' className='bg-green-600 text-white font-semibold px-2 py-1 rounded'>{saving?'posting...':'post'}</button>
         </div>
       </label>

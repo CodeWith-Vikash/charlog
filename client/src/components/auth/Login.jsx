@@ -12,6 +12,7 @@ const Login = () => {
   const [showpass, setshowpass] = useState(false)
   const [isloading, setisloading] = useState(false)
   const [iserr, setiserr] = useState(false)
+  const {baseurl} = useContext(MainContext)
   const passref=useRef()
   const mailref=useRef()
   const {getlocalstorage} = useContext(MainContext)
@@ -25,7 +26,7 @@ const Login = () => {
   const handleSubmit=(e)=>{
     e.preventDefault()
     setisloading(true)
-    axios.post('/api/login',{
+    axios.post(`${baseurl}/api/login`,{
       email:mailref.current.value,
       password:passref.current.value
     },{ withCredentials: true }).then((result)=>{

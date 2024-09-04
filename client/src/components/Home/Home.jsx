@@ -5,20 +5,18 @@ import {MainContext} from '../../context/MainContext'
 
 const Home = () => {
   const {getPost,allposts,postloading}=useContext(MainContext)
-  console.log(allposts);
+  // console.log(allposts);
   useEffect(()=>{
     getPost()
   },[])
   return (
     <div className='min-h-screen bg-gray-300 flex flex-col items-center py-8 gap-6'>
       <AddPost/>
-      {postloading?
-        <img src="/Fading wheel.gif" className='h-20 w-20 pt-10 rounded-full'/>
-      :<main className='flex flex-col gap-6'>
+      <main className='flex flex-col gap-6'>
         {allposts.map((item,i)=>{
           return <Post data={item} key={i}/>
         })}
-      </main>}
+      </main>
     </div>
   )
 }

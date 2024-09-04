@@ -38,7 +38,6 @@ const Dashboard = () => {
   const [removingid, setremovingid] = useState(null)
   axios.defaults.withCredentials=true
 
-
   // Function to get user posts
   const findUserPosts = () => {
     if (userdata && allposts) {
@@ -74,7 +73,7 @@ const Dashboard = () => {
     if(file){
       const fileType = file.type;
       if(fileType.startsWith("image/")){
-      const newProfilePic = await uploadFile(file,setprofilepic,setmediatype)
+      const newProfilePic = await uploadFile(file,setprofilepic)
       console.log(newProfilePic);
       axios
         .patch(`${baseurl}/api/profile/${userdata._id}`, {
@@ -94,6 +93,32 @@ const Dashboard = () => {
       }
     };
   };
+ 
+
+   // function to handle media input
+   async function handleFileInput(file) {
+    if (file) {
+      const fileType = file.type;
+
+      let type;
+      if (fileType.startsWith("image/")) {
+        type = "image";
+      } else if (fileType.startsWith("video/")) {
+        type = "video";
+      } else if (fileType.startsWith("application/")) {
+        type = "file";
+      } else {
+        type = "unknown";
+      }
+      if(type=='image' || type=='video'){
+        setmediatype(type);
+      await uploadFile(file,seteditimg,setmediatype);
+      }else{
+        toast.warning('please select image or video')
+      }
+      
+    }
+  }
 
   // function to edit  a post
   const editPost = (post) => {
@@ -222,7 +247,7 @@ const removeFollower = (id) => {
       <section className="bg-pink-100 flex justify-center">
         <div className="flex flex-col items-center gap-2 md:flex-row p-4 md:gap-4 w-fit">
           {imgloading?
-           <img src="/Fading wheel.gif"/>
+           <img src="/Fading wheel.gif" className="rounded-full h-[200px]"/>
           :<div className="relative">
             <img
               src={profilepic}
@@ -310,13 +335,15 @@ const removeFollower = (id) => {
         : <img src={editimg} className='w-full h-[150px] object-cover rounded cursor-pointer'/>}
         </div>
             <div className="flex items-center justify-between">
-              <label
+              {imgloading?
+                <img src="/Fading wheel.gif" className='rounded-full h-8'/>
+              :<label
                 htmlFor="editimg"
                 className="flex items-center gap-2 cursor-pointer"
               >
                 <FaFileImage size="1.5rem" color="violet" />
                 <b>Edit media</b>
-              </label>
+              </label>}
               <button
                 type="submit"
                 className="bg-green-600 text-white font-semibold px-2 py-1 rounded"
@@ -328,7 +355,7 @@ const removeFollower = (id) => {
               type="file"
               className="hidden"
               id="editimg"
-              onChange={(e) => handleFileChange(e, seteditimg,setmediatype)}
+              onChange={(e) => handleFileInput(e.target.files[0])}
             />
           </form>
         </section>

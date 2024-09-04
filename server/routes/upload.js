@@ -27,7 +27,7 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage });
 
 // Route to handle file upload
-router.post('api/upload', upload.single('file'), (req, res) => {
+router.post('/api/upload', upload.single('file'), (req, res) => {
   try {
     // The uploaded file's Cloudinary info is available in req.file
     res.json({

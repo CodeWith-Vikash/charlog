@@ -25,7 +25,6 @@ app.use(cookieParser())
 mongoose.connect(process.env.CONNECTION_URI).then(()=>{
     console.log('mongodb connected');
 })
-
 app.use(postroute)
 app.use(userroute)
 app.use(uploadroute)

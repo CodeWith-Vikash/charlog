@@ -1,16 +1,18 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import {Link,useNavigate} from 'react-router-dom'
 import { FaRegEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+import { MainContext } from '../../context/MainContext';
 
 const Signup = () => {
   const navigate=useNavigate()
   const [showpass, setshowpass] = useState(false)
   const [isloading, setisloading] = useState(false)
   const [iserr, setiserr] = useState(false)
+  const {baseurl} = useContext(MainContext)
   const passref=useRef()
   const userref=useRef()
   const emailref=useRef()
@@ -24,7 +26,7 @@ const Signup = () => {
   const handleSubmit=(e)=>{
     e.preventDefault()
     setisloading(true)
-    axios.post('/api/signup',{
+    axios.post(`${baseurl}/api/signup`,{
       username:userref.current.value,
       email: emailref.current.value,
       password: passref.current.value
