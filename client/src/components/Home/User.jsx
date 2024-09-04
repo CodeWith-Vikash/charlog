@@ -10,14 +10,14 @@ const User = ({user,findprofileuser,id}) => {
     const [alredayFollowing, setalredayFollowing] = useState(false);
     const [unfollowing, setunfollowing] = useState(false);
     const [userdetails, setuserdetails] = useState({})
-    const {userdata} =
+    const {userdata,baseurl} =
     useContext(MainContext);
     console.log(alredayFollowing,'user : ',user);
     axios.defaults.withCredentials=true
     
    
     const finduser=()=>{
-      axios.get(`/api/user/${user.userId}`).then((result)=>{
+      axios.get(`${baseurl}/api/user/${user.userId}`).then((result)=>{
         setuserdetails(result.data)
         console.log(result);
       }).catch((err)=>{
@@ -28,7 +28,7 @@ const User = ({user,findprofileuser,id}) => {
   const followConnection = () => {
     setfollowing(true);
     axios
-      .patch(`/api/follow/${userdata._id}`, {
+      .patch(`${baseurl}/api/follow/${userdata._id}`, {
         username: user.username,
         userId: user.userId,
         avatar: user.avatar,
@@ -51,7 +51,7 @@ const User = ({user,findprofileuser,id}) => {
   const unfollowConnection = () => {
     setunfollowing(true);
     axios
-      .patch(`/api/unfollow/${userdata._id}`, {
+      .patch(`${baseurl}/api/unfollow/${userdata._id}`, {
         userId:user.userId,
       })
       .then((result) => {

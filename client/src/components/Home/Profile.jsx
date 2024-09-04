@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import User from './User'
 
 const Profile = () => {
-  const { handleFileChange, allposts, getPost, userdata, getlocalstorage,findprofileuser,profileuser } =
+  const { handleFileChange, allposts, getPost, userdata, getlocalstorage,findprofileuser,profileuser,baseurl } =
   useContext(MainContext);
   const [userposts, setuserposts] = useState([]);
   const [following, setfollowing] = useState(false);
@@ -50,7 +50,7 @@ const Profile = () => {
   const follow = () => {
     setfollowing(true);
     axios
-      .patch(`/api/follow/${userdata._id}`, {
+      .patch(`${baseurl}/api/follow/${userdata._id}`, {
         username: profileuser?.username,
         userId: profileuser?._id,
         avatar: profileuser?.avatar,
@@ -76,7 +76,7 @@ const Profile = () => {
   const unfollow = () => {
     setunfollowing(true);
     axios
-      .patch(`/api/unfollow/${userdata._id}`, {
+      .patch(`${baseurl}/api/unfollow/${userdata._id}`, {
         userId: profileuser._id,
       })
       .then((result) => {

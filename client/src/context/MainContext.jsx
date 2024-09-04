@@ -9,11 +9,14 @@ export const ContextProvider=({children})=>{
     const [allusers, setallusers] = useState([])
     const [profileuser, setprofileuser] = useState(null);
     const [postloading, setpostloading] = useState(false)
+    const [imgloading, setimgloading] = useState(false)
     axios.defaults.withCredentials=true
+    // const baseurl='https://charlognew-production.up.railway.app'
+    const baseurl='http://localhost:3000'
    //  function to get allposts
     const getPost=()=>{
       setpostloading(true)
-       axios.get('/api/posts').then((result)=>{
+       axios.get(`${baseurl}/api/posts`).then((result)=>{
           setallposts(result.data)
           setpostloading(false)
        }).catch((err)=>{
@@ -104,32 +107,36 @@ export const ContextProvider=({children})=>{
     }
     
 
-   //  funciton to convert file in to url
-   const handleFileChange = (event, setImageSrc, setMediaType) => {
-    const file = event.target.files[0];
+    // function to upload image on cloudinary
+    const uploadFile = async (file, setFileUrl,setmediaType) => {
+      setimgloading(true);
     
-    if (file) {
-      const fileType = file.type;
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      try {
+        const response = await axios.post(`${baseurl}/api/upload`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+        });
   
-      if (fileType.startsWith('image/')) {
-        setMediaType('image');
-      } else if (fileType.startsWith('video/')) {
-        setMediaType('video');
-      } else {
-        setMediaType('unknown');
+        console.log('File uploaded successfully:', response.data);
+        setFileUrl(response.data.url);
+        setimgloading(false);
+        return response.data.url;
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        setmediaType("text")
+        toast.error('File upload unsuccessful');
+        setimgloading(false);
       }
-  
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImageSrc(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+    };
+    
   
 
     const finduser=(id)=>{
-      axios.get(`/api/user/${id}`).then((result)=>{
+      axios.get(`${baseurl}/api/user/${id}`).then((result)=>{
         setuserdata(result.data)
         console.log(result);
       }).catch((err)=>{
@@ -139,7 +146,7 @@ export const ContextProvider=({children})=>{
    // function to find profile user
   const findprofileuser = (id) => {
     axios
-      .get(`/api/user/${id}`)
+      .get(`${baseurl}/api/user/${id}`)
       .then((result) => {
         setprofileuser(result.data);
       })
@@ -160,7 +167,7 @@ export const ContextProvider=({children})=>{
     }
     //function to getallusers
     const getUsers=()=>{
-       axios.get('/api/users').then((result)=>{
+       axios.get(`${baseurl}/api/users`).then((result)=>{
         console.log(result);
         setallusers(result.data)
        }).catch((err)=>{
@@ -172,7 +179,7 @@ export const ContextProvider=({children})=>{
       getlocalstorage()
       getUsers()
     },[])
-    return <MainContext.Provider value={{getPost,allposts,handleFileChange,userdata,getlocalstorage,calculateTimeGap,commentTimeGap,allusers,findprofileuser,profileuser,postloading}}>
+    return <MainContext.Provider value={{getPost,allposts,uploadFile,imgloading,userdata,getlocalstorage,calculateTimeGap,commentTimeGap,allusers,findprofileuser,profileuser,postloading,baseurl}}>
         {children}
     </MainContext.Provider>
 }

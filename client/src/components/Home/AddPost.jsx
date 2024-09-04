@@ -12,7 +12,7 @@ const AddPost = () => {
   const [saving, setsaving] = useState(false)
   const [posterror, setposterror] = useState(false)
   const [mediaType,setMediaType] = useState('')
-  const {handleFileChange,getPost,userdata}=useContext(MainContext)
+  const {handleFileChange,getPost,userdata,baseurl}=useContext(MainContext)
   const navigate=useNavigate()
   axios.defaults.withCredentials=true
   
@@ -21,7 +21,7 @@ const AddPost = () => {
     e.preventDefault()
     if(userdata){
       setsaving(true)
-    axios.post('/api/posts',{
+    axios.post(`${baseurl}/api/posts`,{
        userInfo:{
          avatar:userdata.avatar,
          username:userdata.username,

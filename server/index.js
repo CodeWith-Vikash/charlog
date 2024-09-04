@@ -3,31 +3,34 @@ const mongoose=require('mongoose')
 const cors=require('cors')
 const postroute= require('./routes/post')
 const userroute= require('./routes/user')
+const uploadroute= require('./routes/upload')
 const bodyParser=require('body-parser')
 const cookieParser=require('cookie-parser')
-const compression = require('compression')
+const dotenv= require('dotenv')
 
 const app=express()
+dotenv.config();
+app.use(cors({
+    origin: ["http://localhost:5173"],
+    methods: ['GET','POST','PATCH','DELETE'],
+    credentials: true
+}));
 
-app.use(express.static('dist'))
-
-app.use(compression({
-    level:6,
-    threshold:10*1000
-}))
 app.use(bodyParser.json());
 app.use(express.json())
 app.use(cookieParser())
 
 
 
-mongoose.connect(`mongodb+srv://vikashkumardev87:RSLx10Hi63x2zgBY@cluster0.w7gbj.mongodb.net/`).then(()=>{
+mongoose.connect(process.env.CONNECTION_URI).then(()=>{
     console.log('mongodb connected');
 })
 
 app.use(postroute)
 app.use(userroute)
+app.use(uploadroute)
 
-app.listen(3000,()=>{
-    console.log('server is running on port 3000');
+const port= process.env.PORT || 3000
+app.listen(port,()=>{
+    console.log(`server is running on port ${port}`);
 })

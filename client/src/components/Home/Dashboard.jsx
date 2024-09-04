@@ -28,7 +28,7 @@ const Dashboard = () => {
   const [deletingid, setdeletingid] = useState(null);
   // ............
   const [profileupdating, setprofileupdating] = useState(false);
-  const { handleFileChange, userdata, allposts, getPost, getlocalstorage } =
+  const { uploadFile, userdata, allposts, getPost, getlocalstorage,imgloading,baseurl } =
     useContext(MainContext);
   const [userposts, setuserposts] = useState([]);
   const [showFollowers, setshowFollowers] = useState(false);
@@ -69,14 +69,15 @@ const Dashboard = () => {
   };
 
   // Function to update avatar
-  const updateProfile = (e) => {
+  const updateProfile = async (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const newProfilePic = reader.result;
-      setprofilepic(newProfilePic);
+    if(file){
+      const fileType = file.type;
+      if(fileType.startsWith("image/")){
+      const newProfilePic = await uploadFile(file,setprofilepic,setmediatype)
+      console.log(newProfilePic);
       axios
-        .patch(`/api/profile/${userdata._id}`, {
+        .patch(`${baseurl}/api/profile/${userdata._id}`, {
           avatar: newProfilePic,
         })
         .then((result) => {
@@ -90,10 +91,8 @@ const Dashboard = () => {
           toast.error('internal server error')
           setprofileupdating(false);
         });
+      }
     };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
   };
 
   // function to edit  a post
@@ -110,7 +109,7 @@ const Dashboard = () => {
     e.preventDefault();
     setsaving(true);
     axios
-      .patch(`/api/post/edit/${editingid}`, {
+      .patch(`${baseurl}/api/post/edit/${editingid}`, {
         title: edittext,
         media:{
           url:editimg,
@@ -146,7 +145,7 @@ const Dashboard = () => {
     e.preventDefault();
     setdeleting(true)
     axios
-      .delete(`/api/post/delete/${deletingid}`)
+      .delete(`${baseurl}/api/post/delete/${deletingid}`)
       .then((data) => {
         console.log(data);
         toast.info('post deleted')
@@ -175,7 +174,7 @@ const Dashboard = () => {
     // function to unfollow user
     const unfollow=(id)=>{
       setunfollowid(id)
-      axios.patch(`/api/unfollow/${userdata._id}`,{
+      axios.patch(`${baseurl}/api/unfollow/${userdata._id}`,{
         userId : id
       }).then((result)=>{
          console.log(result);
@@ -193,7 +192,7 @@ const Dashboard = () => {
 const removeFollower = (id) => {
   setremovingid(id);
   axios
-    .patch(`/api/follower/remove/${id}`, {
+    .patch(`${baseurl}/api/follower/remove/${id}`, {
       userId: userdata._id
     })
     .then((result) => {
@@ -222,7 +221,9 @@ const removeFollower = (id) => {
     >
       <section className="bg-pink-100 flex justify-center">
         <div className="flex flex-col items-center gap-2 md:flex-row p-4 md:gap-4 w-fit">
-          <div className="relative">
+          {imgloading?
+           <img src="/Fading wheel.gif"/>
+          :<div className="relative">
             <img
               src={profilepic}
               className="h-[200px] w-[200px] rounded-full object-cover border-2 border-black"
@@ -238,7 +239,7 @@ const removeFollower = (id) => {
               className="hidden"
               onChange={(e) => updateProfile(e)}
             />
-          </div>
+          </div>}
           {profileupdating && (
             <p className="text-yellow-400 text-lg font-semibold">updating...</p>
           )}

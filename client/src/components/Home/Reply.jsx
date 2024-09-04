@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Reply = ({ reply, postId, commentId, username }) => {
-  const { commentTimeGap, userdata, getlocalstorage, getPost } =
+  const { commentTimeGap, userdata, getlocalstorage, getPost,baseurl } =
     useContext(MainContext);
   const [showreplybox, setshowreplybox] = useState(false);
   const [replyval, setreplyval] = useState("");
@@ -30,7 +30,7 @@ const Reply = ({ reply, postId, commentId, username }) => {
     setreplying(true);
     axios
       .patch(
-        `/api/post/${postId}/comment/${commentId}/reply`,
+        `${baseurl}/api/post/${postId}/comment/${commentId}/reply`,
         {
           username: userdata.username,
           avatar: userdata.avatar,
@@ -58,7 +58,7 @@ const Reply = ({ reply, postId, commentId, username }) => {
     setdeleting(true);
     axios
       .patch(
-        `/api/post/${postId}/comment/${commentId}/reply/${reply._id}/delete`
+        `${baseurl}/api/post/${postId}/comment/${commentId}/reply/${reply._id}/delete`
       )
       .then((result) => {
         console.log(result);
@@ -84,7 +84,7 @@ const Reply = ({ reply, postId, commentId, username }) => {
     setsaving(true);
     axios
       .patch(
-        `/api/post/${postId}/comment/${commentId}/reply/${reply._id}/edit`,
+        `${baseurl}/api/post/${postId}/comment/${commentId}/reply/${reply._id}/edit`,
         {
           reply: editval,
         }
