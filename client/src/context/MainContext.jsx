@@ -12,8 +12,8 @@ export const ContextProvider=({children})=>{
     const [postloading, setpostloading] = useState(false)
     const [imgloading, setimgloading] = useState(false)
     axios.defaults.withCredentials=true
-    // const baseurl='https://charlognew-production.up.railway.app'
-    const baseurl='http://localhost:3000'
+    const baseurl='https://charlognew-production.up.railway.app'
+    // const baseurl='http://localhost:3000'
    //  function to get allposts
     const getPost=()=>{
       setpostloading(true)
